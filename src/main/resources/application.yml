@@ -1,0 +1,18 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  graphql:
+    graphiql:
+      enabled: true
+
+clients:
+  user-service:
+    host: ${USER_SERVICE_HOST:localhost}
+    port: ${USER_SERVICE_PORT:9090}
+    plaintext: ${USER_SERVICE_PLAINTEXT:true}
+    deadline-seconds: ${GRPC_DEADLINE_SECONDS:10}
+
+logging:
+  level:
+    root: INFO
