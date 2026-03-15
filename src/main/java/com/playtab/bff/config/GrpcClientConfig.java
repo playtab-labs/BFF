@@ -11,9 +11,13 @@ import org.springframework.context.annotation.Configuration;
 public class GrpcClientConfig {
 
     @Bean(destroyMethod = "shutdown")
-    public ManagedChannel userServiceChannel(GrpcProperties properties) {
+    public ManagedChannel userServiceChannel(
+            GrpcProperties properties,
+            GrpcAuthInterceptor grpcAuthInterceptor
+    ) {
         ManagedChannelBuilder<?> builder = ManagedChannelBuilder
-                .forAddress(properties.getHost(), properties.getPort());
+                .forAddress(properties.getHost(), properties.getPort())
+                .intercept(grpcAuthInterceptor);
 
         if (properties.isPlaintext()) {
             builder.usePlaintext();

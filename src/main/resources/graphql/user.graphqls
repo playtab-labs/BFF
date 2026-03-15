@@ -1,0 +1,94 @@
+# ── Enums ──
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum ConsentType {
+  PRIVACY
+  SERVICE
+  MARKETING
+}
+
+# ── Output types ──
+
+type UserProfile {
+  identityId: String!
+  profileId: String!
+  email: String!
+  name: String!
+  gender: Gender!
+  phoneNumber: String!
+  birthDate: String!
+  isAdult: Boolean!
+  nationality: String!
+  updatedAt: String
+}
+
+type UserSettings {
+  identityId: String!
+  locale: String!
+  pushEnabled: Boolean!
+  emailNotificationsEnabled: Boolean!
+  marketingAgreed: Boolean!
+  marketingTermsVersion: String!
+}
+
+type MyAuthSummary {
+  identityId: String!
+  role: String!
+  status: String!
+  createdAt: String
+}
+
+type SuccessResult {
+  success: Boolean!
+}
+
+type VerifyAdultResult {
+  success: Boolean!
+  isAdult: Boolean!
+}
+
+# ── Input types ──
+
+input UpdateMyProfileInput {
+  name: String!
+  gender: Gender!
+  phoneNumber: String!
+  birthDate: String!
+  nationality: String!
+}
+
+input UpdateMySettingsInput {
+  locale: String
+  pushEnabled: Boolean
+  emailNotificationsEnabled: Boolean
+}
+
+input ConsentInputDto {
+  termsVersion: String!
+  type: ConsentType!
+  isAgreed: Boolean!
+}
+
+input VerifyAdultInput {
+  isAdult: Boolean!
+}
+
+# ── Query & Mutation ──
+
+extend type Query {
+  me: UserProfile!
+  mySettings: UserSettings!
+  myAuthSummary: MyAuthSummary!
+}
+
+type Mutation {
+  updateMyProfile(input: UpdateMyProfileInput!): UserProfile!
+  updateMySettings(input: UpdateMySettingsInput!): UserSettings!
+  updateConsents(consents: [ConsentInputDto!]!): SuccessResult!
+  verifyAdult(input: VerifyAdultInput!): VerifyAdultResult!
+}
