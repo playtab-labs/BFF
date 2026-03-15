@@ -1,0 +1,139 @@
+syntax = "proto3";
+
+package playtab.userservice.v1;
+
+option java_multiple_files = true;
+option java_package = "com.playtab.userservice.proto.v1";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+import "consent.proto";
+
+service UserService {
+  rpc SignUpWithEmail(SignUpWithEmailRequest) returns (SignUpResponse);
+  rpc GetMyProfile(GetMyProfileRequest) returns (UserProfileResponse);
+  rpc UpdateMyProfile(UpdateMyProfileRequest) returns (UserProfileResponse);
+
+  rpc UpdateConsents(UpdateConsentsRequest) returns (UpdateConsentsResponse);
+  rpc VerifyAdult(VerifyAdultRequest) returns (VerifyAdultResponse);
+
+  rpc SendEmailVerificationCode(SendEmailVerificationCodeRequest)
+      returns (SendEmailVerificationCodeResponse);
+  rpc VerifyEmailCode(VerifyEmailCodeRequest)
+      returns (VerifyEmailCodeResponse);
+
+  rpc GetMySettings(GetMySettingsRequest) returns (UserSettingsResponse);
+  rpc UpdateMySettings(UpdateMySettingsRequest) returns (UserSettingsResponse);
+}
+
+/* ---------- Settings ---------- */
+
+message GetMySettingsRequest {}
+
+message UpdateMySettingsRequest {
+  google.protobuf.StringValue locale = 1;
+  google.protobuf.BoolValue push_enabled = 2;
+  google.protobuf.BoolValue email_notifications_enabled = 3;
+}
+
+message UserSettingsResponse {
+  string identity_id = 1;
+
+  string locale = 2;
+  bool push_enabled = 3;
+  bool email_notifications_enabled = 4;
+
+  bool marketing_agreed = 5;
+  string marketing_terms_version = 6;
+}
+
+/* ---------- Profile ---------- */
+
+enum Gender {
+  GENDER_UNSPECIFIED = 0;
+  MALE = 1;
+  FEMALE = 2;
+  OTHER = 3;
+}
+
+message SignUpWithEmailRequest {
+  string email = 1;
+  string password = 2;
+  string name = 3;
+  Gender gender = 4;
+  string phone_number = 5;
+  string birth_date = 6;
+  string nationality = 7;
+  string session_id = 8;
+  repeated ConsentInput consents = 9;
+}
+
+message SignUpResponse {
+  string identity_id = 1;
+  string profile_id = 2;
+  bool profile_completed = 3;
+  google.protobuf.Timestamp created_at = 4;
+}
+
+message GetMyProfileRequest {}
+
+message UpdateMyProfileRequest {
+  string name = 1;
+  Gender gender = 2;
+  string phone_number = 3;
+  string birth_date = 4;
+  string nationality = 5;
+}
+
+message UserProfileResponse {
+  string identity_id = 1;
+  string profile_id = 2;
+  string email = 3;
+  string name = 4;
+  Gender gender = 5;
+  string phone_number = 6;
+  string birth_date = 7;
+  bool is_adult = 8;
+  string nationality = 9;
+  google.protobuf.Timestamp updated_at = 10;
+}
+
+/* ---------- Consents ---------- */
+
+message UpdateConsentsRequest {
+  repeated ConsentInput consents = 1;
+}
+
+message UpdateConsentsResponse {
+  bool success = 1;
+}
+
+message VerifyAdultRequest {
+  bool is_adult = 1;
+}
+
+message VerifyAdultResponse {
+  bool success = 1;
+  bool is_adult = 2;
+}
+
+message SendEmailVerificationCodeRequest {
+  string email = 1;
+  string session_id = 2;
+}
+
+message SendEmailVerificationCodeResponse {
+  bool success = 1;
+  int64 ttl_seconds = 2;
+}
+
+message VerifyEmailCodeRequest {
+  string email = 1;
+  string code = 2;
+  string session_id = 3;
+}
+
+message VerifyEmailCodeResponse {
+  bool success = 1;
+  bool verified = 2;
+}
