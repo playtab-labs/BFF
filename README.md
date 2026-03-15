@@ -64,36 +64,9 @@ GRPC_DEADLINE_SECONDS=10
 
 ### REST (`/api/v1`)
 
-| Method | Path | 설명 |
-|--------|------|------|
-| POST | `/users/signup` | 이메일 회원가입 |
-| POST | `/auth/login/email` | 이메일 로그인 |
-| POST | `/auth/login/social` | 소셜 로그인 |
-| POST | `/auth/refresh` | 토큰 갱신 |
-| POST | `/auth/logout` | 로그아웃 |
-| POST | `/auth/email-verifications/send` | 이메일 인증코드 발송 |
-| POST | `/auth/email-verifications/verify` | 이메일 인증코드 확인 |
-| GET | `/health` | 헬스체크 |
-
 ### GraphQL (`/graphql`)
 
 **Query**
-
-| 이름 | 설명 |
-|------|------|
-| `me` | 내 프로필 조회 |
-| `mySettings` | 내 설정 조회 |
-| `myAuthSummary` | 인증 요약 조회 |
-| `health` | 헬스체크 |
-
-**Mutation**
-
-| 이름 | 설명 |
-|------|------|
-| `updateMyProfile` | 프로필 수정 |
-| `updateMySettings` | 설정 수정 |
-| `updateConsents` | 약관 동의 업데이트 |
-| `verifyAdult` | 성인 인증 |
 
 GraphiQL UI: [http://localhost:8080/graphiql](http://localhost:8080/graphiql)
 
