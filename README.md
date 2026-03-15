@@ -62,13 +62,15 @@ GRPC_DEADLINE_SECONDS=10
 
 ## API
 
-### REST (`/api/v1`)
-
-### GraphQL (`/graphql`)
-
-**Query**
-
-GraphiQL UI: [http://localhost:8080/graphiql](http://localhost:8080/graphiql)
+### REST
+```
+http://localhost:8080/swagger-ui/index.html
+```
+### GraphQL
+```
+http://localhost:8080/graphiql
+```
+또는 Postman의 GraphQL 호출을 통해 확인 가능합니다.
 
 ## 테스트
 
@@ -88,7 +90,3 @@ curl -X POST http://localhost:8080/api/v1/auth/login/email \
   -H "Content-Type: application/json" \
   -d '{"email": "user@example.com", "password": "password123"}'
 ```
-
-## 라이선스
-
-MIT License
