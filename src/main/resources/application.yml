@@ -6,6 +6,10 @@ spring:
     graphiql:
       enabled: true
 
+jwt:
+  secret-key: ${JWT_SECRET}
+  issuer: ${JWT_ISSUER:user-service}
+
 clients:
   user-service:
     host: ${USER_SERVICE_HOST:localhost}
