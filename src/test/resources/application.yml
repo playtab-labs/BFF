@@ -1,0 +1,3 @@
+jwt:
+  secret-key: dGVzdC1zZWNyZXQta2V5LWZvci1oczUxMi1hbGdvcml0aG0tdGhhdC1uZWVkcy10by1iZS1hdC1sZWFzdC01MTItYml0cy1sb25nLXNv
+  issuer: user-service

@@ -1,5 +1,6 @@
 package com.playtab.bff.config;
 
+import com.playtab.bff.security.AuthenticatedUser;
 import io.grpc.CallOptions;
 import io.grpc.Channel;
 import io.grpc.ClientCall;
@@ -12,16 +13,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-/**
- * TODO: 추후 BFF에서 JWT 검증 후 claims(identityId, role 등)를 추출하여
- *       gRPC metadata로 전달하는 방식으로 변경 예정.
- *       현재는 HTTP Authorization 헤더를 gRPC metadata로 그대로 전달합니다.
- */
 @Component
 public class GrpcAuthInterceptor implements ClientInterceptor {
 
-    private static final Metadata.Key<String> AUTHORIZATION_KEY =
-            Metadata.Key.of("authorization", Metadata.ASCII_STRING_MARSHALLER);
+    private static final Metadata.Key<String> IDENTITY_ID_KEY =
+            Metadata.Key.of("x-identity-id", Metadata.ASCII_STRING_MARSHALLER);
+
+    private static final Metadata.Key<String> ROLE_KEY =
+            Metadata.Key.of("x-role", Metadata.ASCII_STRING_MARSHALLER);
 
     @Override
     public <ReqT, RespT> ClientCall<ReqT, RespT> interceptCall(
@@ -32,22 +31,23 @@ public class GrpcAuthInterceptor implements ClientInterceptor {
         return new ForwardingClientCall.SimpleForwardingClientCall<>(next.newCall(method, callOptions)) {
             @Override
             public void start(Listener<RespT> responseListener, Metadata headers) {
-                String authorization = resolveAuthorizationHeader();
-                if (authorization != null) {
-                    headers.put(AUTHORIZATION_KEY, authorization);
+                AuthenticatedUser user = resolveAuthenticatedUser();
+                if (user != null) {
+                    headers.put(IDENTITY_ID_KEY, user.identityId());
+                    headers.put(ROLE_KEY, user.role());
                 }
                 super.start(responseListener, headers);
             }
         };
     }
 
-    private String resolveAuthorizationHeader() {
+    private AuthenticatedUser resolveAuthenticatedUser() {
         ServletRequestAttributes attributes =
                 (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (attributes == null) {
             return null;
         }
         HttpServletRequest request = attributes.getRequest();
-        return request.getHeader("Authorization");
+        return (AuthenticatedUser) request.getAttribute(AuthenticatedUser.REQUEST_ATTRIBUTE);
     }
 }
