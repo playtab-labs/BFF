@@ -20,7 +20,9 @@ import reactor.core.publisher.Mono;
 public class GraphqlAuthInterceptor implements WebGraphQlInterceptor {
 
     private static final Set<String> PUBLIC_FIELDS = Set.of(
-            "health"
+            "health",
+            "performers",
+            "schedulesByDay"
     );
 
     @Override
