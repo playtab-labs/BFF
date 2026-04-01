@@ -22,7 +22,13 @@ public class GraphqlAuthInterceptor implements WebGraphQlInterceptor {
     private static final Set<String> PUBLIC_FIELDS = Set.of(
             "health",
             "performers",
-            "schedulesByDay"
+            "schedulesByDay",
+            "foodTrucks",
+            "pubs",
+            "mdItems",
+            "mdItemDetail",
+            "notices",
+            "noticeDetail"
     );
 
     @Override
@@ -64,7 +70,9 @@ public class GraphqlAuthInterceptor implements WebGraphQlInterceptor {
                 .map(sel -> ((Field) sel).getName())
                 .toList();
 
-        return !PUBLIC_FIELDS.containsAll(fieldNames);
+        return fieldNames.stream()
+                .noneMatch(name -> name.startsWith("__"))
+                && !PUBLIC_FIELDS.containsAll(fieldNames);
     }
 
     private AuthenticatedUser resolveUser() {
