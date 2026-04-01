@@ -16,6 +16,11 @@ clients:
     port: ${USER_SERVICE_PORT:9090}
     plaintext: ${USER_SERVICE_PLAINTEXT:true}
     deadline-seconds: ${GRPC_DEADLINE_SECONDS:10}
+  lineup-service:
+    host: ${LINEUP_SERVICE_HOST:localhost}
+    port: ${LINEUP_SERVICE_PORT:9092}
+    plaintext: ${LINEUP_SERVICE_PLAINTEXT:true}
+    deadline-seconds: ${LINEUP_DEADLINE_SECONDS:5}
 
 logging:
   level:

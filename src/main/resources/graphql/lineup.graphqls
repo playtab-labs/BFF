@@ -1,0 +1,64 @@
+scalar JSON
+
+type Performer {
+  id: ID!
+  name: JSON!
+  description: JSON!
+  imageUrl: String!
+  isActive: Boolean!
+  isFavorited: Boolean!
+  createdAt: String
+  updatedAt: String
+}
+
+type Stage {
+  id: ID!
+  name: JSON!
+  locationDesc: JSON!
+  displayOrder: Int!
+}
+
+type FestivalDay {
+  id: ID!
+  dayNumber: Int!
+  eventDate: String!
+}
+
+type PerformanceDuration {
+  durationMinutes: Int!
+  durationLabel: String!
+}
+
+type PerformanceSchedule {
+  id: ID!
+  performer: Performer!
+  stage: Stage!
+  festivalDay: FestivalDay!
+  startAt: String!
+  endAt: String!
+  status: ScheduleStatus!
+  duration: PerformanceDuration!
+}
+
+type Favorite {
+  id: ID!
+  performerId: ID!
+  createdAt: String
+}
+
+enum ScheduleStatus {
+  SCHEDULED
+  CANCELLED
+  COMPLETED
+}
+
+extend type Query {
+  performers(activeOnly: Boolean, stageName: String): [Performer!]!
+  schedulesByDay(dayNumber: Int!, stageName: String): [PerformanceSchedule!]!
+  myFavorites: [Performer!]!
+}
+
+extend type Mutation {
+  addFavorite(performerId: ID!): Favorite!
+  removeFavorite(performerId: ID!): Boolean!
+}
