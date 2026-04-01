@@ -1,0 +1,104 @@
+# ── Page ──
+
+type PageInfo {
+  page: Int!
+  size: Int!
+  totalElements: Int!
+  totalPages: Int!
+  hasNext: Boolean!
+}
+
+# ── Food Truck ──
+
+type FoodTruck {
+  id: ID!
+  name: String!
+  thumbnailImageUrl: String!
+  shortDescription: String!
+  displayOrder: Int!
+}
+
+# ── Pub ──
+
+type Pub {
+  id: ID!
+  collegeName: String!
+  thumbnailImageUrl: String!
+  isNameConfirmed: Boolean!
+  displayOrder: Int!
+}
+
+# ── MD Item ──
+
+type MdItemSummary {
+  id: ID!
+  name: String!
+  thumbnailImageUrl: String!
+  price: Int!
+  isSoldOut: Boolean!
+}
+
+type MdItemsResponse {
+  items: [MdItemSummary!]!
+  pageInfo: PageInfo!
+}
+
+type MdOptionValue {
+  id: ID!
+  valueName: String!
+  extraPrice: Int!
+  isSoldOut: Boolean!
+  displayOrder: Int!
+}
+
+type MdOptionGroup {
+  id: ID!
+  name: String!
+  displayOrder: Int!
+  values: [MdOptionValue!]!
+}
+
+type MdItemDetail {
+  id: ID!
+  name: String!
+  thumbnailImageUrl: String!
+  detailImageUrl: String!
+  price: Int!
+  isSoldOut: Boolean!
+  productDescription: String!
+  detailDescription: String!
+  optionGroups: [MdOptionGroup!]!
+}
+
+# ── Notice ──
+
+type NoticeSummary {
+  id: ID!
+  title: String!
+  postedAt: String!
+  isPinned: Boolean!
+}
+
+type NoticesResponse {
+  notices: [NoticeSummary!]!
+  pageInfo: PageInfo!
+}
+
+type NoticeDetail {
+  id: ID!
+  title: String!
+  content: String!
+  postedAt: String!
+  isPinned: Boolean!
+}
+
+# ── Query ──
+
+extend type Query {
+  foodTrucks(locale: String): [FoodTruck!]!
+  pubs(locale: String): [Pub!]!
+  mdItems(locale: String, page: Int, size: Int): MdItemsResponse!
+  mdItemDetail(locale: String, mdItemId: ID!): MdItemDetail!
+  notices(locale: String, page: Int, size: Int): NoticesResponse!
+  noticeDetail(locale: String, noticeId: ID!): NoticeDetail!
+}

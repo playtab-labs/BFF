@@ -1,5 +1,6 @@
 package com.playtab.bff.config;
 
+import com.playtab.contentservice.grpc.proto.v1.ContentServiceGrpc;
 import com.playtab.lineupservice.grpc.proto.LineupServiceGrpc;
 import com.playtab.userservice.proto.v1.AuthServiceGrpc;
 import com.playtab.userservice.proto.v1.UserServiceGrpc;
@@ -65,5 +66,29 @@ public class GrpcClientConfig {
             @Qualifier("lineupServiceChannel") ManagedChannel lineupServiceChannel
     ) {
         return LineupServiceGrpc.newBlockingStub(lineupServiceChannel);
+    }
+
+    @Bean(destroyMethod = "shutdown")
+    @Qualifier("contentServiceChannel")
+    public ManagedChannel contentServiceChannel(
+            ContentServiceProperties properties,
+            GrpcAuthInterceptor grpcAuthInterceptor
+    ) {
+        ManagedChannelBuilder<?> builder = ManagedChannelBuilder
+                .forAddress(properties.getHost(), properties.getPort())
+                .intercept(grpcAuthInterceptor);
+
+        if (properties.isPlaintext()) {
+            builder.usePlaintext();
+        }
+
+        return builder.build();
+    }
+
+    @Bean
+    public ContentServiceGrpc.ContentServiceBlockingStub contentServiceBlockingStub(
+            @Qualifier("contentServiceChannel") ManagedChannel contentServiceChannel
+    ) {
+        return ContentServiceGrpc.newBlockingStub(contentServiceChannel);
     }
 }

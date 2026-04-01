@@ -8,3 +8,8 @@ clients:
     port: 9091
     plaintext: true
     deadline-seconds: 5
+  content-service:
+    host: localhost
+    port: 9096
+    plaintext: true
+    deadline-seconds: 5

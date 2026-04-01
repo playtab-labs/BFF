@@ -21,6 +21,11 @@ clients:
     port: ${LINEUP_SERVICE_PORT:9092}
     plaintext: ${LINEUP_SERVICE_PLAINTEXT:true}
     deadline-seconds: ${LINEUP_DEADLINE_SECONDS:5}
+  content-service:
+    host: ${CONTENT_SERVICE_HOST:localhost}
+    port: ${CONTENT_SERVICE_PORT:9096}
+    plaintext: ${CONTENT_SERVICE_PLAINTEXT:true}
+    deadline-seconds: ${CONTENT_DEADLINE_SECONDS:5}
 
 logging:
   level:

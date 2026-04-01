@@ -1,0 +1,41 @@
+package com.playtab.bff.content.dto.output;
+
+public class NoticeSummaryDto {
+
+    private Long id;
+    private String title;
+    private String postedAt;
+    private boolean pinned;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getPostedAt() {
+        return postedAt;
+    }
+
+    public void setPostedAt(String postedAt) {
+        this.postedAt = postedAt;
+    }
+
+    public boolean isPinned() {
+        return pinned;
+    }
+
+    public void setPinned(boolean pinned) {
+        this.pinned = pinned;
+    }
+}
