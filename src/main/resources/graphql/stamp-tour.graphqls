@@ -1,0 +1,19 @@
+# ── Stamp Tour ──
+
+type StampSpot {
+  spotId: ID!
+  spotName: String!
+  spotDescription: String!
+  visited: Boolean!
+  visitedAt: String
+}
+
+type MyStampsResponse {
+  totalCount: Int!
+  visitedCount: Int!
+  spots: [StampSpot!]!
+}
+
+extend type Query {
+  myStamps: MyStampsResponse!
+}

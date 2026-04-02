@@ -26,6 +26,11 @@ clients:
     port: ${CONTENT_SERVICE_PORT:9096}
     plaintext: ${CONTENT_SERVICE_PLAINTEXT:true}
     deadline-seconds: ${CONTENT_DEADLINE_SECONDS:5}
+  stamp-tour-service:
+    host: ${STAMP_TOUR_SERVICE_HOST:localhost}
+    port: ${STAMP_TOUR_SERVICE_PORT:9098}
+    plaintext: ${STAMP_TOUR_SERVICE_PLAINTEXT:true}
+    deadline-seconds: ${STAMP_TOUR_DEADLINE_SECONDS:5}
 
 logging:
   level:

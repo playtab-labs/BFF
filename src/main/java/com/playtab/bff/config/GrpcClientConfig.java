@@ -2,6 +2,7 @@ package com.playtab.bff.config;
 
 import com.playtab.contentservice.grpc.proto.v1.ContentServiceGrpc;
 import com.playtab.lineupservice.grpc.proto.LineupServiceGrpc;
+import com.playtab.stamptourservice.grpc.proto.StampTourServiceGrpc;
 import com.playtab.userservice.proto.v1.AuthServiceGrpc;
 import com.playtab.userservice.proto.v1.UserServiceGrpc;
 import io.grpc.ManagedChannel;
@@ -90,5 +91,29 @@ public class GrpcClientConfig {
             @Qualifier("contentServiceChannel") ManagedChannel contentServiceChannel
     ) {
         return ContentServiceGrpc.newBlockingStub(contentServiceChannel);
+    }
+
+    @Bean(destroyMethod = "shutdown")
+    @Qualifier("stampTourServiceChannel")
+    public ManagedChannel stampTourServiceChannel(
+            StampTourServiceProperties properties,
+            GrpcAuthInterceptor grpcAuthInterceptor
+    ) {
+        ManagedChannelBuilder<?> builder = ManagedChannelBuilder
+                .forAddress(properties.getHost(), properties.getPort())
+                .intercept(grpcAuthInterceptor);
+
+        if (properties.isPlaintext()) {
+            builder.usePlaintext();
+        }
+
+        return builder.build();
+    }
+
+    @Bean
+    public StampTourServiceGrpc.StampTourServiceBlockingStub stampTourServiceBlockingStub(
+            @Qualifier("stampTourServiceChannel") ManagedChannel stampTourServiceChannel
+    ) {
+        return StampTourServiceGrpc.newBlockingStub(stampTourServiceChannel);
     }
 }

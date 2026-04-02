@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package stamptour.v1;
+
+option java_multiple_files = true;
+option java_package = "com.playtab.stamptourservice.grpc.proto";
+option java_outer_classname = "StampTourProto";
+
+service StampTourService {
+  // 스팟 방문 기록 남기기
+  rpc Visit(VisitRequest) returns (VisitResponse);
+
+  // 내 스탬프 투어 내역 조회
+  rpc GetMyStamps(GetMyStampsRequest) returns (GetMyStampsResponse);
+}
+
+message VisitRequest {
+  int64 spot_id = 1;
+}
+
+message VisitResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message GetMyStampsRequest {
+}
+
+message GetMyStampsResponse {
+  int32 total_count = 1;
+  int32 visited_count = 2;
+  repeated StampSpot spots = 3;
+}
+
+message StampSpot {
+  int64 spot_id = 1;
+  string spot_name = 2;
+  string spot_description = 3;
+  bool visited = 4;
+  string visited_at = 5;
+}
