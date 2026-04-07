@@ -1,5 +1,6 @@
 package com.playtab.bff.config;
 
+import com.playtab.cloudgateservice.grpc.WristbandServiceGrpc;
 import com.playtab.contentservice.grpc.proto.v1.ContentServiceGrpc;
 import com.playtab.lineupservice.grpc.proto.LineupServiceGrpc;
 import com.playtab.stamptourservice.grpc.proto.StampTourServiceGrpc;
@@ -115,5 +116,29 @@ public class GrpcClientConfig {
             @Qualifier("stampTourServiceChannel") ManagedChannel stampTourServiceChannel
     ) {
         return StampTourServiceGrpc.newBlockingStub(stampTourServiceChannel);
+    }
+
+    @Bean(destroyMethod = "shutdown")
+    @Qualifier("cloudGateServiceChannel")
+    public ManagedChannel cloudGateServiceChannel(
+            CloudGateServiceProperties properties,
+            GrpcAuthInterceptor grpcAuthInterceptor
+    ) {
+        ManagedChannelBuilder<?> builder = ManagedChannelBuilder
+                .forAddress(properties.getHost(), properties.getPort())
+                .intercept(grpcAuthInterceptor);
+
+        if (properties.isPlaintext()) {
+            builder.usePlaintext();
+        }
+
+        return builder.build();
+    }
+
+    @Bean
+    public WristbandServiceGrpc.WristbandServiceBlockingStub wristbandServiceBlockingStub(
+            @Qualifier("cloudGateServiceChannel") ManagedChannel cloudGateServiceChannel
+    ) {
+        return WristbandServiceGrpc.newBlockingStub(cloudGateServiceChannel);
     }
 }

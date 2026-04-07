@@ -31,6 +31,11 @@ clients:
     port: ${STAMP_TOUR_SERVICE_PORT:9098}
     plaintext: ${STAMP_TOUR_SERVICE_PLAINTEXT:true}
     deadline-seconds: ${STAMP_TOUR_DEADLINE_SECONDS:5}
+  cloud-gate-service:
+    host: ${CLOUD_GATE_SERVICE_HOST:localhost}
+    port: ${CLOUD_GATE_SERVICE_PORT:9094}
+    plaintext: ${CLOUD_GATE_SERVICE_PLAINTEXT:true}
+    deadline-seconds: ${CLOUD_GATE_DEADLINE_SECONDS:5}
 
 logging:
   level:
