@@ -1,0 +1,15 @@
+# ── Wristband ──
+
+type WristbandInfo {
+  rfid: String!
+  activeDate: String!
+  linkedAt: String!
+}
+
+extend type Query {
+  myWristbands: [WristbandInfo!]!
+}
+
+extend type Mutation {
+  linkWristband(rfid: String!): WristbandInfo!
+}
