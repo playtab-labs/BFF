@@ -19,10 +19,10 @@ public class LineupFacade {
     }
 
     public List<PerformerDto> getPerformers(Boolean activeOnly, String stageName) {
-        GetPerformersRequest.Builder builder = GetPerformersRequest.newBuilder();
-        if (activeOnly != null) {
-            builder.setActiveOnly(activeOnly);
-        }
+        boolean resolvedActiveOnly = activeOnly == null ? true : activeOnly;
+
+        GetPerformersRequest.Builder builder = GetPerformersRequest.newBuilder()
+                .setActiveOnly(resolvedActiveOnly);
         if (stageName != null) {
             builder.setStageName(stageName);
         }
@@ -32,6 +32,7 @@ public class LineupFacade {
                 .map(this::toPerformerDto)
                 .toList();
     }
+
 
     public List<PerformanceScheduleDto> getSchedulesByDay(int dayNumber, String stageName) {
         GetSchedulesByDayRequest.Builder builder = GetSchedulesByDayRequest.newBuilder()
