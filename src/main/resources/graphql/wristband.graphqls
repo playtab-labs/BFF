@@ -7,9 +7,11 @@ type WristbandInfo {
 }
 
 extend type Query {
+  "내 팔찌 목록 조회"
   myWristbands: [WristbandInfo!]!
 }
 
 extend type Mutation {
+  "퍼스널라이징"
   linkWristband(rfid: String!): WristbandInfo!
 }

@@ -81,14 +81,21 @@ input VerifyAdultInput {
 # ── Query & Mutation ──
 
 extend type Query {
+  "현재 로그인한 사용자의 프로필 조회"
   me: UserProfile!
+  "현재 사용자의 설정 조회 (언어, 푸시 알림, 이메일 알림 등)"
   mySettings: UserSettings!
+  "삭제 예정"
   myAuthSummary: MyAuthSummary!
 }
 
 type Mutation {
+  "내 프로필 수정 (이름, 성별, 전화번호, 생년월일, 국적) - 기획 상 사용 X"
   updateMyProfile(input: UpdateMyProfileInput!): UserProfile!
+  "내 설정 수정 (언어, 푸시 알림, 이메일 알림)"
   updateMySettings(input: UpdateMySettingsInput!): UserSettings!
+  "약관 동의 상태 변경 (개인정보, 서비스, 마케팅)"
   updateConsents(consents: [ConsentInputDto!]!): SuccessResult!
+  "성인 인증 처리 - 사용 X"
   verifyAdult(input: VerifyAdultInput!): VerifyAdultResult!
 }

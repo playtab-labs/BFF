@@ -7,9 +7,12 @@ import com.playtab.bff.auth.dto.response.SignUpResponseDto;
 import com.playtab.bff.auth.dto.response.SuccessResponseDto;
 import com.playtab.bff.auth.dto.response.VerifyEmailCodeResponseDto;
 import com.playtab.bff.auth.service.AuthFacade;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Auth", description = "인증 관련 API")
 @RestController
 @RequestMapping("/api/v1")
 public class AuthRestController {
@@ -20,6 +23,7 @@ public class AuthRestController {
         this.authFacade = authFacade;
     }
 
+    @Operation(summary = "이메일 로그인")
     @PostMapping("/auth/login/email")
     public AuthTokensResponseDto loginWithEmail(
             @RequestBody LoginWithEmailRequestDto request,
@@ -28,6 +32,7 @@ public class AuthRestController {
         return authFacade.loginWithEmail(request, httpServletRequest);
     }
 
+    @Operation(summary = "액세스 토큰 갱신 (리프레시 토큰 사용)")
     @PostMapping("/auth/refresh")
     public AuthTokensResponseDto refreshTokens(
             @RequestBody RefreshTokensRequestDto request,
@@ -36,16 +41,19 @@ public class AuthRestController {
         return authFacade.refreshTokens(request, httpServletRequest);
     }
 
+    @Operation(summary = "로그아웃")
     @PostMapping("/auth/logout")
     public SuccessResponseDto logout(@RequestBody LogoutRequestDto request) {
         return authFacade.logout(request);
     }
 
+    @Operation(summary = "이메일 회원가입")
     @PostMapping("/users/signup")
     public SignUpResponseDto signUpWithEmail(@RequestBody SignUpWithEmailRequestDto request) {
         return authFacade.signUpWithEmail(request);
     }
 
+    @Operation(summary = "이메일 인증 코드 발송")
     @PostMapping("/auth/email-verifications/send")
     public SendEmailVerificationCodeResponseDto sendEmailVerificationCode(
             @RequestBody SendEmailVerificationCodeRequestDto request
@@ -53,6 +61,7 @@ public class AuthRestController {
         return authFacade.sendEmailVerificationCode(request);
     }
 
+    @Operation(summary = "이메일 인증 코드 검증")
     @PostMapping("/auth/email-verifications/verify")
     public VerifyEmailCodeResponseDto verifyEmailCode(
             @RequestBody VerifyEmailCodeRequestDto request
@@ -60,6 +69,7 @@ public class AuthRestController {
         return authFacade.verifyEmailCode(request);
     }
 
+    @Operation(summary = "소셜 로그인 (OAuth 제공자 연동) - 사용 X")
     @PostMapping("/auth/login/social")
     public AuthTokensResponseDto loginWithSocial(
             @RequestBody LoginWithSocialRequestDto request,
