@@ -33,16 +33,19 @@ public class LineupFacade {
                 .toList();
     }
 
-    public List<PerformanceScheduleDto> getSchedulesByDay(int dayNumber, String stageName) {
+    public List<StageScheduleDto> getSchedulesByDay(long dayId, String stageName, String locale) {
         GetSchedulesByDayRequest.Builder builder = GetSchedulesByDayRequest.newBuilder()
-                .setDayNumber(dayNumber);
+                .setDayId(dayId);
         if (stageName != null) {
             builder.setStageName(stageName);
         }
+        if (locale != null) {
+            builder.setLocale(locale);
+        }
 
         GetSchedulesByDayResponse response = lineupGrpcClient.getSchedulesByDay(builder.build());
-        return response.getSchedulesList().stream()
-                .map(this::toPerformanceScheduleDto)
+        return response.getStagesList().stream()
+                .map(this::toStageScheduleDto)
                 .toList();
     }
 
@@ -68,6 +71,13 @@ public class LineupFacade {
         GetFavoritesResponse response = lineupGrpcClient.getFavorites();
         return response.getPerformersList().stream()
                 .map(this::toPerformerDto)
+                .toList();
+    }
+
+    public List<FestivalDayDto> getFestivalDays() {
+        GetFestivalDaysResponse response = lineupGrpcClient.getFestivalDays();
+        return response.getFestivalDaysList().stream()
+                .map(this::toFestivalDayDto)
                 .toList();
     }
 
@@ -110,16 +120,23 @@ public class LineupFacade {
         return dto;
     }
 
-    private PerformanceScheduleDto toPerformanceScheduleDto(PerformanceSchedule proto) {
-        PerformanceScheduleDto dto = new PerformanceScheduleDto();
-        dto.setId(proto.getId());
+    private ArtistScheduleDto toArtistScheduleDto(ArtistSchedule proto) {
+        ArtistScheduleDto dto = new ArtistScheduleDto();
+        dto.setScheduleId(proto.getScheduleId());
         dto.setPerformer(toPerformerDto(proto.getPerformer()));
-        dto.setStage(toStageDto(proto.getStage()));
-        dto.setFestivalDay(toFestivalDayDto(proto.getFestivalDay()));
         dto.setStartAt(toIsoString(proto.getStartAt()));
         dto.setEndAt(toIsoString(proto.getEndAt()));
         dto.setStatus(toScheduleStatus(proto.getStatus()));
         dto.setDuration(toPerformanceDurationDto(proto.getDuration()));
+        return dto;
+    }
+
+    private StageScheduleDto toStageScheduleDto(StageSchedule proto) {
+        StageScheduleDto dto = new StageScheduleDto();
+        dto.setStage(toStageDto(proto.getStage()));
+        dto.setArtists(proto.getArtistsList().stream()
+                .map(this::toArtistScheduleDto)
+                .toList());
         return dto;
     }
 
