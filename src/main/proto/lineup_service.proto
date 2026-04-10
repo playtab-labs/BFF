@@ -83,7 +83,7 @@ message Favorite {
 
 message GetPerformersRequest {
   optional bool active_only = 1;
-  string stage_name = 2;
+  int64 stage_id = 2;
   string locale = 3;
 }
 
@@ -93,7 +93,7 @@ message GetPerformersResponse {
 
 message GetSchedulesByDayRequest {
   int32 day_number = 1;
-  string stage_name = 2;
+  int64 stage_id = 2;
 }
 
 message GetSchedulesByDayResponse {

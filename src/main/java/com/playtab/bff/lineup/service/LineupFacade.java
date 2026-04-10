@@ -18,13 +18,13 @@ public class LineupFacade {
         this.lineupGrpcClient = lineupGrpcClient;
     }
 
-    public List<PerformerDto> getPerformers(Boolean activeOnly, String stageName, String locale) {
+    public List<PerformerDto> getPerformers(Boolean activeOnly, Long stageId, String locale) {
         GetPerformersRequest.Builder builder = GetPerformersRequest.newBuilder();
         if (activeOnly != null) {
             builder.setActiveOnly(activeOnly);
         }
-        if (stageName != null) {
-            builder.setStageName(stageName);
+        if (stageId != null) {
+            builder.setStageId(stageId);
         }
         if (locale != null) {
             builder.setLocale(locale);
@@ -36,11 +36,11 @@ public class LineupFacade {
                 .toList();
     }
 
-    public List<PerformanceScheduleDto> getSchedulesByDay(int dayNumber, String stageName) {
+    public List<PerformanceScheduleDto> getSchedulesByDay(int dayNumber, Long stageId) {
         GetSchedulesByDayRequest.Builder builder = GetSchedulesByDayRequest.newBuilder()
                 .setDayNumber(dayNumber);
-        if (stageName != null) {
-            builder.setStageName(stageName);
+        if (stageId != null) {
+            builder.setStageId(stageId);
         }
 
         GetSchedulesByDayResponse response = lineupGrpcClient.getSchedulesByDay(builder.build());
