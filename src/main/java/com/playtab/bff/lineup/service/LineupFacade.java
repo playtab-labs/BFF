@@ -18,13 +18,16 @@ public class LineupFacade {
         this.lineupGrpcClient = lineupGrpcClient;
     }
 
-    public List<PerformerDto> getPerformers(Boolean activeOnly, String stageName) {
+    public List<PerformerDto> getPerformers(Boolean activeOnly, String stageName, String locale) {
         GetPerformersRequest.Builder builder = GetPerformersRequest.newBuilder();
         if (activeOnly != null) {
             builder.setActiveOnly(activeOnly);
         }
         if (stageName != null) {
             builder.setStageName(stageName);
+        }
+        if (locale != null) {
+            builder.setLocale(locale);
         }
 
         GetPerformersResponse response = lineupGrpcClient.getPerformers(builder.build());
@@ -70,8 +73,6 @@ public class LineupFacade {
                 .map(this::toPerformerDto)
                 .toList();
     }
-
-    // ── Proto → DTO 변환 ──
 
     private PerformerDto toPerformerDto(Performer proto) {
         PerformerDto dto = new PerformerDto();
