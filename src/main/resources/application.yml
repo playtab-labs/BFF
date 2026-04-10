@@ -7,7 +7,7 @@ spring:
       enabled: true
 
 jwt:
-  secret-key: ${JWT_SECRET}
+  secret-key: ${JWT_SECRET_KEY:playtab-bff-jwt-secret-key-2026-abcdef123456}
   issuer: ${JWT_ISSUER:user-service}
 
 clients:
@@ -18,7 +18,7 @@ clients:
     deadline-seconds: ${GRPC_DEADLINE_SECONDS:10}
   lineup-service:
     host: ${LINEUP_SERVICE_HOST:localhost}
-    port: ${LINEUP_SERVICE_PORT:9092}
+    port: ${LINEUP_SERVICE_PORT:9091}
     plaintext: ${LINEUP_SERVICE_PLAINTEXT:true}
     deadline-seconds: ${LINEUP_DEADLINE_SECONDS:5}
   content-service:

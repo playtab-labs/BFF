@@ -84,6 +84,11 @@ public class LineupFacade {
         dto.setFavorited(proto.getIsFavorited());
         dto.setCreatedAt(toIsoString(proto.getCreatedAt()));
         dto.setUpdatedAt(toIsoString(proto.getUpdatedAt()));
+        dto.setStageNames(
+                proto.getStageNamesList().stream()
+                        .map(this::toLocalizedMap)
+                        .toList()
+        );
         return dto;
     }
 
