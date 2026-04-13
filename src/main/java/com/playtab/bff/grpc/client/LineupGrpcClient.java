@@ -48,4 +48,10 @@ public class LineupGrpcClient {
                 .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
                 .getFavorites(GetFavoritesRequest.newBuilder().build());
     }
+
+    public GetFestivalDaysResponse getFestivalDays() {
+        return lineupServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .getFestivalDays(GetFestivalDaysRequest.newBuilder().build());
+    }
 }
