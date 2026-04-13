@@ -1,5 +1,6 @@
 package com.playtab.bff.lineup.dto.output;
 
+import java.util.List;
 import java.util.Map;
 
 public class PerformerDto {
@@ -12,6 +13,7 @@ public class PerformerDto {
     private boolean favorited;
     private String createdAt;
     private String updatedAt;
+    private List<Map<String, String>> stageNames;
 
     public Long getId() {
         return id;
@@ -75,5 +77,13 @@ public class PerformerDto {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public List<Map<String, String>> getStageNames() {
+        return stageNames;
+    }
+
+    public void setStageNames(List<Map<String, String>> stageNames) {
+        this.stageNames = stageNames;
     }
 }
