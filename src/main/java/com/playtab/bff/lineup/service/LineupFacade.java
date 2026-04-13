@@ -2,8 +2,29 @@ package com.playtab.bff.lineup.service;
 
 import com.google.protobuf.Timestamp;
 import com.playtab.bff.grpc.client.LineupGrpcClient;
-import com.playtab.bff.lineup.dto.output.*;
-import com.playtab.lineupservice.grpc.proto.*;
+import com.playtab.bff.lineup.dto.output.FavoriteDto;
+import com.playtab.bff.lineup.dto.output.FestivalDayDto;
+import com.playtab.bff.lineup.dto.output.PerformanceDurationDto;
+import com.playtab.bff.lineup.dto.output.PerformanceScheduleDto;
+import com.playtab.bff.lineup.dto.output.PerformerDto;
+import com.playtab.bff.lineup.dto.output.StageDto;
+import com.playtab.lineupservice.grpc.proto.AddFavoriteRequest;
+import com.playtab.lineupservice.grpc.proto.AddFavoriteResponse;
+import com.playtab.lineupservice.grpc.proto.Favorite;
+import com.playtab.lineupservice.grpc.proto.FestivalDay;
+import com.playtab.lineupservice.grpc.proto.GetFavoritesResponse;
+import com.playtab.lineupservice.grpc.proto.GetPerformersRequest;
+import com.playtab.lineupservice.grpc.proto.GetPerformersResponse;
+import com.playtab.lineupservice.grpc.proto.GetSchedulesByDayRequest;
+import com.playtab.lineupservice.grpc.proto.GetSchedulesByDayResponse;
+import com.playtab.lineupservice.grpc.proto.LocalizedText;
+import com.playtab.lineupservice.grpc.proto.PerformanceDuration;
+import com.playtab.lineupservice.grpc.proto.PerformanceSchedule;
+import com.playtab.lineupservice.grpc.proto.Performer;
+import com.playtab.lineupservice.grpc.proto.RemoveFavoriteRequest;
+import com.playtab.lineupservice.grpc.proto.RemoveFavoriteResponse;
+import com.playtab.lineupservice.grpc.proto.ScheduleStatusProto;
+import com.playtab.lineupservice.grpc.proto.Stage;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +41,7 @@ public class LineupFacade {
 
     public List<PerformerDto> getPerformers(Boolean activeOnly, Long stageId, String locale) {
         GetPerformersRequest.Builder builder = GetPerformersRequest.newBuilder();
+
         if (activeOnly != null) {
             builder.setActiveOnly(activeOnly);
         }
@@ -39,6 +61,7 @@ public class LineupFacade {
     public List<PerformanceScheduleDto> getSchedulesByDay(int dayNumber, Long stageId) {
         GetSchedulesByDayRequest.Builder builder = GetSchedulesByDayRequest.newBuilder()
                 .setDayNumber(dayNumber);
+
         if (stageId != null) {
             builder.setStageId(stageId);
         }
