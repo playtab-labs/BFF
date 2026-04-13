@@ -14,6 +14,7 @@ service LineupService {
   rpc AddFavorite (AddFavoriteRequest) returns (AddFavoriteResponse);
   rpc RemoveFavorite (RemoveFavoriteRequest) returns (RemoveFavoriteResponse);
   rpc GetFavorites (GetFavoritesRequest) returns (GetFavoritesResponse);
+  rpc GetFestivalDays (GetFestivalDaysRequest) returns (GetFestivalDaysResponse);
 }
 
 message LocalizedText {
@@ -65,13 +66,28 @@ message PerformanceSchedule {
   int64 id = 1;
   Performer performer = 2;
   Stage stage = 3;
-  FestivalDay festival_day = 4;
-  google.protobuf.Timestamp start_at = 5;
-  google.protobuf.Timestamp end_at = 6;
-  ScheduleStatusProto status = 7;
-  PerformanceDuration duration = 8;
-  google.protobuf.Timestamp created_at = 9;
-  google.protobuf.Timestamp updated_at = 10;
+  google.protobuf.Timestamp start_at = 4;
+  google.protobuf.Timestamp end_at = 5;
+  ScheduleStatusProto status = 6;
+  PerformanceDuration duration = 7;
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp updated_at = 9;
+}
+
+message ArtistSchedule {
+  int64 schedule_id = 1;
+  Performer performer = 2;
+  google.protobuf.Timestamp start_at = 3;
+  google.protobuf.Timestamp end_at = 4;
+  ScheduleStatusProto status = 5;
+  PerformanceDuration duration = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+}
+
+message StageSchedule {
+  Stage stage = 1;
+  repeated ArtistSchedule artists = 2;
 }
 
 message Favorite {
@@ -92,12 +108,13 @@ message GetPerformersResponse {
 }
 
 message GetSchedulesByDayRequest {
-  int32 day_number = 1;
+  int64 day_id = 1;
   string stage_name = 2;
+  string locale = 3;
 }
 
 message GetSchedulesByDayResponse {
-  repeated PerformanceSchedule schedules = 1;
+  repeated StageSchedule stages = 1;
 }
 
 message AddFavoriteRequest {
@@ -121,4 +138,11 @@ message GetFavoritesRequest {
 
 message GetFavoritesResponse {
   repeated Performer performers = 1;
+}
+
+message GetFestivalDaysRequest {
+}
+
+message GetFestivalDaysResponse {
+  repeated FestivalDay festival_days = 1;
 }

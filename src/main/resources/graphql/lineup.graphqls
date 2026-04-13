@@ -30,15 +30,18 @@ type PerformanceDuration {
   durationLabel: String!
 }
 
-type PerformanceSchedule {
-  id: ID!
+type ArtistSchedule {
+  scheduleId: ID!
   performer: Performer!
-  stage: Stage!
-  festivalDay: FestivalDay!
   startAt: String!
   endAt: String!
   status: ScheduleStatus!
   duration: PerformanceDuration!
+}
+
+type StageSchedule {
+  stage: Stage!
+  artists: [ArtistSchedule!]!
 }
 
 type Favorite {
@@ -56,10 +59,12 @@ enum ScheduleStatus {
 extend type Query {
   "공연자 목록 조회 (활성 상태, 스테이지별 필터링 가능)"
   performers(activeOnly: Boolean, stageName: String): [Performer!]!
-  "특정 일자의 공연 스케줄 조회 (스테이지별 필터링 가능)"
-  schedulesByDay(dayNumber: Int!, stageName: String): [PerformanceSchedule!]!
+  "특정 일자의 공연 타임테이블 조회 (스테이지별 필터링 가능)"
+  schedulesByDay(dayId: ID!, stageName: String, locale: String): [StageSchedule!]!
   "내가 즐겨찾기한 공연자 목록 조회"
   myFavorites: [Performer!]!
+  "페스티벌 일자 목록 조회"
+  festivalDays: [FestivalDay!]!
 }
 
 extend type Mutation {
