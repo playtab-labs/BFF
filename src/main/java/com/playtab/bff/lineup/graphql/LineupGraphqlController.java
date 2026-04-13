@@ -1,8 +1,9 @@
 package com.playtab.bff.lineup.graphql;
 
 import com.playtab.bff.lineup.dto.output.FavoriteDto;
-import com.playtab.bff.lineup.dto.output.PerformanceScheduleDto;
+import com.playtab.bff.lineup.dto.output.FestivalDayDto;
 import com.playtab.bff.lineup.dto.output.PerformerDto;
+import com.playtab.bff.lineup.dto.output.StageScheduleDto;
 import com.playtab.bff.lineup.service.LineupFacade;
 import java.util.List;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -22,23 +23,28 @@ public class LineupGraphqlController {
     @QueryMapping
     public List<PerformerDto> performers(
             @Argument Boolean activeOnly,
-            @Argument Long stageId,
-            @Argument String locale
+            @Argument String stageName
     ) {
-        return lineupFacade.getPerformers(activeOnly, stageId, locale);
+        return lineupFacade.getPerformers(activeOnly, stageName);
     }
 
     @QueryMapping
-    public List<PerformanceScheduleDto> schedulesByDay(
-            @Argument int dayNumber,
-            @Argument Long stageId
+    public List<StageScheduleDto> schedulesByDay(
+            @Argument Long dayId,
+            @Argument String stageName,
+            @Argument String locale
     ) {
-        return lineupFacade.getSchedulesByDay(dayNumber, stageId);
+        return lineupFacade.getSchedulesByDay(dayId, stageName, locale);
     }
 
     @QueryMapping
     public List<PerformerDto> myFavorites() {
         return lineupFacade.getMyFavorites();
+    }
+
+    @QueryMapping
+    public List<FestivalDayDto> festivalDays() {
+        return lineupFacade.getFestivalDays();
     }
 
     @MutationMapping
