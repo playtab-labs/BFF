@@ -18,7 +18,7 @@ public class LineupFacade {
         this.lineupGrpcClient = lineupGrpcClient;
     }
 
-    public List<PerformerDto> getPerformers(Boolean activeOnly, String stageName) {
+    public List<PerformerDto> getPerformers(Boolean activeOnly, String stageName, String locale) {
         GetPerformersRequest.Builder builder = GetPerformersRequest.newBuilder();
         if (activeOnly != null) {
             builder.setActiveOnly(activeOnly);
@@ -29,7 +29,7 @@ public class LineupFacade {
 
         GetPerformersResponse response = lineupGrpcClient.getPerformers(builder.build());
         return response.getPerformersList().stream()
-                .map(this::toPerformerDto)
+                .map(proto -> toPerformerDto(proto, locale))
                 .toList();
     }
 
@@ -45,7 +45,7 @@ public class LineupFacade {
 
         GetSchedulesByDayResponse response = lineupGrpcClient.getSchedulesByDay(builder.build());
         return response.getStagesList().stream()
-                .map(this::toStageScheduleDto)
+                .map(stage -> toStageScheduleDto(stage, locale))
                 .toList();
     }
 
@@ -70,7 +70,7 @@ public class LineupFacade {
     public List<PerformerDto> getMyFavorites() {
         GetFavoritesResponse response = lineupGrpcClient.getFavorites();
         return response.getPerformersList().stream()
-                .map(this::toPerformerDto)
+                .map(proto -> toPerformerDto(proto, null))
                 .toList();
     }
 
@@ -83,11 +83,11 @@ public class LineupFacade {
 
     // ── Proto → DTO 변환 ──
 
-    private PerformerDto toPerformerDto(Performer proto) {
+    private PerformerDto toPerformerDto(Performer proto, String locale) {
         PerformerDto dto = new PerformerDto();
         dto.setId(proto.getId());
-        dto.setName(toLocalizedMap(proto.getName()));
-        dto.setDescription(toLocalizedMap(proto.getDescription()));
+        dto.setName(resolveLocalized(proto.getName(), locale));
+        dto.setDescription(resolveLocalized(proto.getDescription(), locale));
         dto.setImageUrl(proto.getImageUrl());
         dto.setActive(proto.getIsActive());
         dto.setFavorited(proto.getIsFavorited());
@@ -96,11 +96,11 @@ public class LineupFacade {
         return dto;
     }
 
-    private StageDto toStageDto(Stage proto) {
+    private StageDto toStageDto(Stage proto, String locale) {
         StageDto dto = new StageDto();
         dto.setId(proto.getId());
-        dto.setName(toLocalizedMap(proto.getName()));
-        dto.setLocationDesc(toLocalizedMap(proto.getLocationDesc()));
+        dto.setName(resolveLocalized(proto.getName(), locale));
+        dto.setLocationDesc(resolveLocalized(proto.getLocationDesc(), locale));
         dto.setDisplayOrder(proto.getDisplayOrder());
         return dto;
     }
@@ -120,10 +120,10 @@ public class LineupFacade {
         return dto;
     }
 
-    private ArtistScheduleDto toArtistScheduleDto(ArtistSchedule proto) {
+    private ArtistScheduleDto toArtistScheduleDto(ArtistSchedule proto, String locale) {
         ArtistScheduleDto dto = new ArtistScheduleDto();
         dto.setScheduleId(proto.getScheduleId());
-        dto.setPerformer(toPerformerDto(proto.getPerformer()));
+        dto.setPerformer(toPerformerDto(proto.getPerformer(), locale));
         dto.setStartAt(toIsoString(proto.getStartAt()));
         dto.setEndAt(toIsoString(proto.getEndAt()));
         dto.setStatus(toScheduleStatus(proto.getStatus()));
@@ -131,11 +131,11 @@ public class LineupFacade {
         return dto;
     }
 
-    private StageScheduleDto toStageScheduleDto(StageSchedule proto) {
+    private StageScheduleDto toStageScheduleDto(StageSchedule proto, String locale) {
         StageScheduleDto dto = new StageScheduleDto();
-        dto.setStage(toStageDto(proto.getStage()));
+        dto.setStage(toStageDto(proto.getStage(), locale));
         dto.setArtists(proto.getArtistsList().stream()
-                .map(this::toArtistScheduleDto)
+                .map(artist -> toArtistScheduleDto(artist, locale))
                 .toList());
         return dto;
     }
@@ -157,11 +157,15 @@ public class LineupFacade {
         };
     }
 
-    private Map<String, String> toLocalizedMap(LocalizedText text) {
+    private Map<String, String> resolveLocalized(LocalizedText text, String locale) {
         if (text == null) {
             return Map.of();
         }
-        return text.getValuesMap();
+        Map<String, String> valuesMap = text.getValuesMap();
+        if (locale != null && valuesMap.containsKey(locale)) {
+            return Map.of(locale, valuesMap.get(locale));
+        }
+        return valuesMap;
     }
 
     private String toIsoString(Timestamp timestamp) {
