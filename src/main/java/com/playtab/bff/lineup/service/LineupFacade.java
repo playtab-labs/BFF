@@ -26,6 +26,9 @@ public class LineupFacade {
         if (stageName != null) {
             builder.setStageName(stageName);
         }
+        if (locale != null) {
+            builder.setLocale(locale);
+        }
 
         GetPerformersResponse response = lineupGrpcClient.getPerformers(builder.build());
         return response.getPerformersList().stream()
@@ -91,6 +94,9 @@ public class LineupFacade {
         dto.setImageUrl(proto.getImageUrl());
         dto.setActive(proto.getIsActive());
         dto.setFavorited(proto.getIsFavorited());
+        dto.setStageNames(proto.getStageNamesList().stream()
+                .map(text -> resolveLocalized(text, locale))
+                .toList());
         dto.setCreatedAt(toIsoString(proto.getCreatedAt()));
         dto.setUpdatedAt(toIsoString(proto.getUpdatedAt()));
         return dto;
