@@ -1,5 +1,6 @@
 package com.playtab.bff.lineup.dto.output;
 
+import java.util.List;
 import java.util.Map;
 
 public class PerformerDto {
@@ -10,6 +11,7 @@ public class PerformerDto {
     private String imageUrl;
     private boolean active;
     private boolean favorited;
+    private List<Map<String, String>> stageNames;
     private String createdAt;
     private String updatedAt;
 
@@ -59,6 +61,14 @@ public class PerformerDto {
 
     public void setFavorited(boolean favorited) {
         this.favorited = favorited;
+    }
+
+    public List<Map<String, String>> getStageNames() {
+        return stageNames;
+    }
+
+    public void setStageNames(List<Map<String, String>> stageNames) {
+        this.stageNames = stageNames;
     }
 
     public String getCreatedAt() {
