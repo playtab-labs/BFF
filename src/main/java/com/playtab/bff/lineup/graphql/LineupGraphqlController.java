@@ -23,19 +23,19 @@ public class LineupGraphqlController {
     @QueryMapping
     public List<PerformerDto> performers(
             @Argument Boolean activeOnly,
-            @Argument String stageName,
+            @Argument Long stageId,
             @Argument String locale
     ) {
-        return lineupFacade.getPerformers(activeOnly, stageName, locale);
+        return lineupFacade.getPerformers(activeOnly, stageId, locale);
     }
 
     @QueryMapping
     public List<StageScheduleDto> schedulesByDay(
             @Argument Long dayId,
-            @Argument String stageName,
+            @Argument Long stageId,
             @Argument String locale
     ) {
-        return lineupFacade.getSchedulesByDay(dayId, stageName, locale);
+        return lineupFacade.getSchedulesByDay(dayId, stageId, locale);
     }
 
     @QueryMapping
