@@ -4,6 +4,7 @@ import com.playtab.bff.grpc.client.StampTourGrpcClient;
 import com.playtab.bff.stamptour.dto.output.MyStampsResponseDto;
 import com.playtab.bff.stamptour.dto.output.StampSpotDto;
 import com.playtab.bff.stamptour.dto.response.VisitResultDto;
+import com.playtab.stamptourservice.grpc.proto.GetMyStampsRequest;
 import com.playtab.stamptourservice.grpc.proto.GetMyStampsResponse;
 import com.playtab.stamptourservice.grpc.proto.StampSpot;
 import com.playtab.stamptourservice.grpc.proto.VisitRequest;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class StampTourFacade {
+
+    private static final String DEFAULT_LOCALE = "ko";
 
     private final StampTourGrpcClient stampTourGrpcClient;
 
@@ -32,8 +35,12 @@ public class StampTourFacade {
         return dto;
     }
 
-    public MyStampsResponseDto getMyStamps() {
-        GetMyStampsResponse response = stampTourGrpcClient.getMyStamps();
+    public MyStampsResponseDto getMyStamps(String locale) {
+        GetMyStampsRequest request = GetMyStampsRequest.newBuilder()
+                .setLocale(resolveLocale(locale))
+                .build();
+
+        GetMyStampsResponse response = stampTourGrpcClient.getMyStamps(request);
 
         MyStampsResponseDto dto = new MyStampsResponseDto();
         dto.setTotalCount(response.getTotalCount());
@@ -42,6 +49,10 @@ public class StampTourFacade {
                 .map(this::toStampSpotDto)
                 .toList());
         return dto;
+    }
+
+    private String resolveLocale(String locale) {
+        return locale != null ? locale : DEFAULT_LOCALE;
     }
 
     private StampSpotDto toStampSpotDto(StampSpot proto) {

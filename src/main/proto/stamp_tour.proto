@@ -24,6 +24,7 @@ message VisitResponse {
 }
 
 message GetMyStampsRequest {
+  string locale = 1;
 }
 
 message GetMyStampsResponse {
