@@ -6,6 +6,8 @@ type StampSpot {
   spotDescription: String!
   visited: Boolean!
   visitedAt: String
+  latitude: Float!
+  longitude: Float!
 }
 
 type MyStampsResponse {

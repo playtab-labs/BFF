@@ -26,6 +26,6 @@ public class StampTourRestController {
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/visit")
     public VisitResultDto visit(@RequestBody VisitRequestDto request) {
-        return stampTourFacade.visit(request.getSpotId());
+        return stampTourFacade.visit(request.getSpotId(), request.getLatitude(), request.getLongitude());
     }
 }

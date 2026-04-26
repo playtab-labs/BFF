@@ -19,9 +19,11 @@ public class StampTourFacade {
         this.stampTourGrpcClient = stampTourGrpcClient;
     }
 
-    public VisitResultDto visit(long spotId) {
+    public VisitResultDto visit(long spotId, double latitude, double longitude) {
         VisitRequest request = VisitRequest.newBuilder()
                 .setSpotId(spotId)
+                .setLatitude(latitude)
+                .setLongitude(longitude)
                 .build();
 
         VisitResponse response = stampTourGrpcClient.visit(request);
@@ -51,6 +53,8 @@ public class StampTourFacade {
         dto.setSpotDescription(proto.getSpotDescription());
         dto.setVisited(proto.getVisited());
         dto.setVisitedAt(proto.getVisitedAt().isEmpty() ? null : proto.getVisitedAt());
+        dto.setLatitude(proto.getLatitude());
+        dto.setLongitude(proto.getLongitude());
         return dto;
     }
 }
