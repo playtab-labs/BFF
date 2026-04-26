@@ -29,9 +29,9 @@ public class StampTourGrpcClient {
                 .visit(request);
     }
 
-    public GetMyStampsResponse getMyStamps() {
+    public GetMyStampsResponse getMyStamps(GetMyStampsRequest request) {
         return stampTourServiceBlockingStub
                 .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
-                .getMyStamps(GetMyStampsRequest.newBuilder().build());
+                .getMyStamps(request);
     }
 }
