@@ -1,9 +1,11 @@
 package com.playtab.bff.user.graphql;
 
+import com.playtab.bff.user.dto.input.ChangeMyPasswordInput;
 import com.playtab.bff.user.dto.input.ConsentInputDto;
 import com.playtab.bff.user.dto.input.UpdateMyProfileInput;
 import com.playtab.bff.user.dto.input.UpdateMySettingsInput;
 import com.playtab.bff.user.dto.input.VerifyAdultInput;
+import com.playtab.bff.user.dto.input.WithdrawMyAccountInput;
 import com.playtab.bff.user.dto.output.MyAuthSummaryDto;
 import com.playtab.bff.user.dto.output.SuccessResultDto;
 import com.playtab.bff.user.dto.output.UserProfileDto;
@@ -58,5 +60,15 @@ public class UserGraphqlController {
     @MutationMapping
     public VerifyAdultResultDto verifyAdult(@Argument VerifyAdultInput input) {
         return userFacade.verifyAdult(input.isAdult());
+    }
+
+    @MutationMapping
+    public SuccessResultDto changeMyPassword(@Argument ChangeMyPasswordInput input) {
+        return userFacade.changeMyPassword(input);
+    }
+
+    @MutationMapping
+    public SuccessResultDto withdrawMyAccount(@Argument WithdrawMyAccountInput input) {
+        return userFacade.withdrawMyAccount(input);
     }
 }

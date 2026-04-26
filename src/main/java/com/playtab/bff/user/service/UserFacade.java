@@ -7,9 +7,11 @@ import com.playtab.bff.grpc.client.AuthGrpcClient;
 import com.playtab.bff.grpc.client.UserGrpcClient;
 import com.playtab.bff.user.dto.ConsentTypeDto;
 import com.playtab.bff.user.dto.GenderDto;
+import com.playtab.bff.user.dto.input.ChangeMyPasswordInput;
 import com.playtab.bff.user.dto.input.ConsentInputDto;
 import com.playtab.bff.user.dto.input.UpdateMyProfileInput;
 import com.playtab.bff.user.dto.input.UpdateMySettingsInput;
+import com.playtab.bff.user.dto.input.WithdrawMyAccountInput;
 import com.playtab.bff.user.dto.output.MyAuthSummaryDto;
 import com.playtab.bff.user.dto.output.SuccessResultDto;
 import com.playtab.bff.user.dto.output.UserProfileDto;
@@ -93,6 +95,25 @@ public class UserFacade {
         dto.setSuccess(response.getSuccess());
         dto.setAdult(response.getIsAdult());
         return dto;
+    }
+
+    public SuccessResultDto changeMyPassword(ChangeMyPasswordInput input) {
+        ChangeMyPasswordRequest request = ChangeMyPasswordRequest.newBuilder()
+                .setCurrentPassword(nullToEmpty(input.getCurrentPassword()))
+                .setNewPassword(nullToEmpty(input.getNewPassword()))
+                .build();
+
+        ChangeMyPasswordResponse response = userGrpcClient.changeMyPassword(request);
+        return new SuccessResultDto(response.getSuccess());
+    }
+
+    public SuccessResultDto withdrawMyAccount(WithdrawMyAccountInput input) {
+        WithdrawMyAccountRequest request = WithdrawMyAccountRequest.newBuilder()
+                .setRefreshToken(nullToEmpty(input.getRefreshToken()))
+                .build();
+
+        WithdrawMyAccountResponse response = userGrpcClient.withdrawMyAccount(request);
+        return new SuccessResultDto(response.getSuccess());
     }
 
     // ── Proto → DTO 변환 ──
