@@ -174,6 +174,7 @@ public class ContentFacade {
         dto.setTitle(proto.getTitle());
         dto.setPostedAt(proto.getPostedAt());
         dto.setPinned(proto.getIsPinned());
+        dto.setImageUrl(proto.getImageUrl());
         return dto;
     }
 
@@ -184,6 +185,7 @@ public class ContentFacade {
         dto.setContent(proto.getContent());
         dto.setPostedAt(proto.getPostedAt());
         dto.setPinned(proto.getIsPinned());
+        dto.setImageUrl(proto.getImageUrl());
         return dto;
     }
 

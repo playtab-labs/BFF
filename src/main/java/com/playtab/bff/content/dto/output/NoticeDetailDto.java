@@ -7,6 +7,7 @@ public class NoticeDetailDto {
     private String content;
     private String postedAt;
     private boolean pinned;
+    private String imageUrl;
 
     public Long getId() {
         return id;
@@ -46,5 +47,13 @@ public class NoticeDetailDto {
 
     public void setPinned(boolean pinned) {
         this.pinned = pinned;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
