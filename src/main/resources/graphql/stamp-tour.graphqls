@@ -16,17 +16,7 @@ type MyStampsResponse {
   spots: [StampSpot!]!
 }
 
-type VisitResult {
-  success: Boolean!
-  message: String!
-}
-
 extend type Query {
   "내 스탬프 투어 현황 조회 (전체 스팟 수, 방문 수, 스팟별 방문 여부)"
   myStamps: MyStampsResponse!
-}
-
-extend type Mutation {
-  "스팟 방문 처리 (위치 좌표 포함)"
-  visit(spotId: ID!, latitude: Float!, longitude: Float!): VisitResult!
 }
