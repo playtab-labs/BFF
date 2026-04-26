@@ -60,4 +60,16 @@ public class UserGrpcClient {
                 .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
                 .verifyAdult(request);
     }
+
+    public ChangeMyPasswordResponse changeMyPassword(ChangeMyPasswordRequest request) {
+        return userServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .changeMyPassword(request);
+    }
+
+    public WithdrawMyAccountResponse withdrawMyAccount(WithdrawMyAccountRequest request) {
+        return userServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .withdrawMyAccount(request);
+    }
 }

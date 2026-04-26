@@ -78,6 +78,15 @@ input VerifyAdultInput {
   isAdult: Boolean!
 }
 
+input ChangeMyPasswordInput {
+  currentPassword: String!
+  newPassword: String!
+}
+
+input WithdrawMyAccountInput {
+  refreshToken: String!
+}
+
 # ── Query & Mutation ──
 
 extend type Query {
@@ -98,4 +107,8 @@ type Mutation {
   updateConsents(consents: [ConsentInputDto!]!): SuccessResult!
   "성인 인증 처리 - 사용 X"
   verifyAdult(input: VerifyAdultInput!): VerifyAdultResult!
+  "비밀번호 변경"
+  changeMyPassword(input: ChangeMyPasswordInput!): SuccessResult!
+  "회원 탈퇴"
+  withdrawMyAccount(input: WithdrawMyAccountInput!): SuccessResult!
 }
