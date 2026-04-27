@@ -2,8 +2,12 @@ package com.playtab.bff.auth.service;
 
 import com.google.protobuf.Timestamp;
 import com.playtab.bff.auth.dto.request.*;
+import com.playtab.bff.auth.dto.request.ResetPasswordRequestDto;
+import com.playtab.bff.auth.dto.request.SendPasswordResetCodeRequestDto;
+import com.playtab.bff.auth.dto.request.VerifyPasswordResetCodeRequestDto;
 import com.playtab.bff.auth.dto.response.AuthTokensResponseDto;
 import com.playtab.bff.auth.dto.response.SendEmailVerificationCodeResponseDto;
+import com.playtab.bff.auth.dto.response.SendPasswordResetCodeResponseDto;
 import com.playtab.bff.auth.dto.response.SignUpResponseDto;
 import com.playtab.bff.auth.dto.response.SuccessResponseDto;
 import com.playtab.bff.auth.dto.response.VerifyEmailCodeResponseDto;
@@ -121,6 +125,43 @@ public class AuthFacade {
         dto.setSuccess(response.getSuccess());
         dto.setVerified(response.getVerified());
         return dto;
+    }
+
+    public SendPasswordResetCodeResponseDto sendPasswordResetCode(
+            SendPasswordResetCodeRequestDto requestDto
+    ) {
+        SendPasswordResetCodeRequest request = SendPasswordResetCodeRequest.newBuilder()
+                .setEmail(nullToEmpty(requestDto.getEmail()))
+                .build();
+
+        SendPasswordResetCodeResponse response = authGrpcClient.sendPasswordResetCode(request);
+
+        SendPasswordResetCodeResponseDto dto = new SendPasswordResetCodeResponseDto();
+        dto.setSuccess(response.getSuccess());
+        dto.setTtlSeconds(response.getTtlSeconds());
+        return dto;
+    }
+
+    public SuccessResponseDto verifyPasswordResetCode(
+            VerifyPasswordResetCodeRequestDto requestDto
+    ) {
+        VerifyPasswordResetCodeRequest request = VerifyPasswordResetCodeRequest.newBuilder()
+                .setEmail(nullToEmpty(requestDto.getEmail()))
+                .setCode(nullToEmpty(requestDto.getCode()))
+                .build();
+
+        VerifyPasswordResetCodeResponse response = authGrpcClient.verifyPasswordResetCode(request);
+        return new SuccessResponseDto(response.getSuccess());
+    }
+
+    public SuccessResponseDto resetPassword(ResetPasswordRequestDto requestDto) {
+        ResetPasswordRequest request = ResetPasswordRequest.newBuilder()
+                .setEmail(nullToEmpty(requestDto.getEmail()))
+                .setNewPassword(nullToEmpty(requestDto.getNewPassword()))
+                .build();
+
+        ResetPasswordResponse response = authGrpcClient.resetPassword(request);
+        return new SuccessResponseDto(response.getSuccess());
     }
 
     public AuthTokensResponseDto loginWithSocial(
