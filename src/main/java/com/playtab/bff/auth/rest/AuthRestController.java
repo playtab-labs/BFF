@@ -3,6 +3,7 @@ package com.playtab.bff.auth.rest;
 import com.playtab.bff.auth.dto.request.*;
 import com.playtab.bff.auth.dto.response.AuthTokensResponseDto;
 import com.playtab.bff.auth.dto.response.SendEmailVerificationCodeResponseDto;
+import com.playtab.bff.auth.dto.response.SendPasswordResetCodeResponseDto;
 import com.playtab.bff.auth.dto.response.SignUpResponseDto;
 import com.playtab.bff.auth.dto.response.SuccessResponseDto;
 import com.playtab.bff.auth.dto.response.VerifyEmailCodeResponseDto;
@@ -67,6 +68,28 @@ public class AuthRestController {
             @RequestBody VerifyEmailCodeRequestDto request
     ) {
         return authFacade.verifyEmailCode(request);
+    }
+
+    @Operation(summary = "비밀번호 재설정 코드 발송")
+    @PostMapping("/auth/password-resets/send")
+    public SendPasswordResetCodeResponseDto sendPasswordResetCode(
+            @RequestBody SendPasswordResetCodeRequestDto request
+    ) {
+        return authFacade.sendPasswordResetCode(request);
+    }
+
+    @Operation(summary = "비밀번호 재설정 코드 검증")
+    @PostMapping("/auth/password-resets/verify")
+    public SuccessResponseDto verifyPasswordResetCode(
+            @RequestBody VerifyPasswordResetCodeRequestDto request
+    ) {
+        return authFacade.verifyPasswordResetCode(request);
+    }
+
+    @Operation(summary = "비밀번호 재설정")
+    @PostMapping("/auth/password-resets/reset")
+    public SuccessResponseDto resetPassword(@RequestBody ResetPasswordRequestDto request) {
+        return authFacade.resetPassword(request);
     }
 
     @Operation(summary = "소셜 로그인 (OAuth 제공자 연동) - 사용 X")
