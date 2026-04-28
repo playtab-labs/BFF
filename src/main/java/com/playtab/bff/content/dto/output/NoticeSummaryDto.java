@@ -7,6 +7,7 @@ public class NoticeSummaryDto {
     private String postedAt;
     private boolean pinned;
     private String imageUrl;
+    private String contentPreview;
 
     public Long getId() {
         return id;
@@ -46,5 +47,13 @@ public class NoticeSummaryDto {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getContentPreview() {
+        return contentPreview;
+    }
+
+    public void setContentPreview(String contentPreview) {
+        this.contentPreview = contentPreview;
     }
 }

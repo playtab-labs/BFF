@@ -78,6 +78,7 @@ type NoticeSummary {
   postedAt: String!
   isPinned: Boolean!
   imageUrl: String
+  contentPreview: String
 }
 
 type NoticesResponse {
