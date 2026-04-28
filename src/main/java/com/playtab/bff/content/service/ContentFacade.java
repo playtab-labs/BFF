@@ -175,6 +175,7 @@ public class ContentFacade {
         dto.setPostedAt(proto.getPostedAt());
         dto.setPinned(proto.getIsPinned());
         dto.setImageUrl(proto.getImageUrl());
+        dto.setContentPreview(proto.getContentPreview());
         return dto;
     }
 
