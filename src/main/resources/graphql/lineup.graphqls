@@ -56,9 +56,16 @@ enum ScheduleStatus {
   COMPLETED
 }
 
+type PerformersByDay {
+  day: FestivalDay!
+  performers: [Performer!]!
+}
+
 extend type Query {
   "공연자 목록 조회 (활성 상태, 스테이지별 필터링 가능)"
   performers(activeOnly: Boolean, stageId: ID, locale: String): [Performer!]!
+  "날짜별 공연자 목록 조회 (라인업, 전체 날짜 그룹핑)"
+  performersByDay(locale: String): [PerformersByDay!]!
   "특정 일자의 공연 타임테이블 조회 (스테이지별 필터링 가능)"
   schedulesByDay(dayId: ID!, stageId: ID, locale: String): [StageSchedule!]!
   "내가 즐겨찾기한 공연자 목록 조회"

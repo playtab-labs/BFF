@@ -3,6 +3,7 @@ package com.playtab.bff.lineup.graphql;
 import com.playtab.bff.lineup.dto.output.FavoriteDto;
 import com.playtab.bff.lineup.dto.output.FestivalDayDto;
 import com.playtab.bff.lineup.dto.output.PerformerDto;
+import com.playtab.bff.lineup.dto.output.PerformersByDayDto;
 import com.playtab.bff.lineup.dto.output.StageScheduleDto;
 import com.playtab.bff.lineup.service.LineupFacade;
 import java.util.List;
@@ -18,6 +19,11 @@ public class LineupGraphqlController {
 
     public LineupGraphqlController(LineupFacade lineupFacade) {
         this.lineupFacade = lineupFacade;
+    }
+
+    @QueryMapping
+    public List<PerformersByDayDto> performersByDay(@Argument String locale) {
+        return lineupFacade.getPerformersByDay(locale);
     }
 
     @QueryMapping

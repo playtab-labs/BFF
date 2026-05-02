@@ -84,6 +84,18 @@ public class LineupFacade {
                 .toList();
     }
 
+    public List<PerformersByDayDto> getPerformersByDay(String locale) {
+        GetPerformersByDayRequest.Builder builder = GetPerformersByDayRequest.newBuilder();
+        if (locale != null) {
+            builder.setLocale(locale);
+        }
+
+        GetPerformersByDayResponse response = lineupGrpcClient.getPerformersByDay(builder.build());
+        return response.getDaysList().stream()
+                .map(dayProto -> toPerformersByDayDto(dayProto, locale))
+                .toList();
+    }
+
     // ── Proto → DTO 변환 ──
 
     private PerformerDto toPerformerDto(Performer proto, String locale) {
@@ -99,6 +111,15 @@ public class LineupFacade {
                 .toList());
         dto.setCreatedAt(toIsoString(proto.getCreatedAt()));
         dto.setUpdatedAt(toIsoString(proto.getUpdatedAt()));
+        return dto;
+    }
+
+    private PerformersByDayDto toPerformersByDayDto(PerformersByDay proto, String locale) {
+        PerformersByDayDto dto = new PerformersByDayDto();
+        dto.setDay(toFestivalDayDto(proto.getFestivalDay()));
+        dto.setPerformers(proto.getPerformersList().stream()
+                .map(p -> toPerformerDto(p, locale))
+                .toList());
         return dto;
     }
 
