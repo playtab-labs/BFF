@@ -54,4 +54,10 @@ public class LineupGrpcClient {
                 .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
                 .getFestivalDays(GetFestivalDaysRequest.newBuilder().build());
     }
+
+    public GetPerformersByDayResponse getPerformersByDay(GetPerformersByDayRequest request) {
+        return lineupServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .getPerformersByDay(request);
+    }
 }
