@@ -9,6 +9,7 @@ import com.playtab.bff.auth.dto.response.SuccessResponseDto;
 import com.playtab.bff.auth.dto.response.VerifyEmailCodeResponseDto;
 import com.playtab.bff.auth.service.AuthFacade;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +44,7 @@ public class AuthRestController {
     }
 
     @Operation(summary = "로그아웃")
+    @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/auth/logout")
     public SuccessResponseDto logout(@RequestBody LogoutRequestDto request) {
         return authFacade.logout(request);

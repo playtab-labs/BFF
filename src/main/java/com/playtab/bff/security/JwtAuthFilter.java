@@ -30,6 +30,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             "/api/v1/users/signup",
             "/api/v1/auth/email-verifications/send",
             "/api/v1/auth/email-verifications/verify",
+            "/api/v1/auth/password-resets/send",
+            "/api/v1/auth/password-resets/verify",
+            "/api/v1/auth/password-resets/reset",
             "/api/v1/health"
     );
 
