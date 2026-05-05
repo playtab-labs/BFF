@@ -4,7 +4,16 @@ server:
 spring:
   graphql:
     graphiql:
-      enabled: true
+      enabled: ${GRAPHIQL_ENABLED:false}
+    schema:
+      introspection:
+        enabled: ${GRAPHQL_INTROSPECTION_ENABLED:false}
+
+springdoc:
+  api-docs:
+    enabled: ${SPRINGDOC_ENABLED:false}
+  swagger-ui:
+    enabled: ${SPRINGDOC_ENABLED:false}
 
 jwt:
   secret-key: ${JWT_SECRET}
