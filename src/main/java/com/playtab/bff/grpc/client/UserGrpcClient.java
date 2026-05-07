@@ -72,4 +72,16 @@ public class UserGrpcClient {
                 .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
                 .withdrawMyAccount(request);
     }
+
+    public AdminListUsersResponse adminListUsers(AdminListUsersRequest request) {
+        return userServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminListUsers(request);
+    }
+
+    public AdminGetUserResponse adminGetUser(AdminGetUserRequest request) {
+        return userServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminGetUser(request);
+    }
 }
