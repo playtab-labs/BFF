@@ -74,6 +74,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         try {
             AuthenticatedUser user = jwtTokenParser.parse(token);
+            if (path.startsWith("/admin/") && !"ADMIN".equals(user.role())) {
+                writeForbidden(response, request, "Admin access required");
+                return;
+            }
             request.setAttribute(AuthenticatedUser.REQUEST_ATTRIBUTE, user);
             filterChain.doFilter(request, response);
         } catch (JwtException e) {
@@ -113,6 +117,26 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             return header.substring(BEARER_PREFIX.length());
         }
         return null;
+    }
+
+    private void writeForbidden(
+            HttpServletResponse response,
+            HttpServletRequest request,
+            String message
+    ) throws IOException {
+        HttpStatus status = HttpStatus.FORBIDDEN;
+        ApiErrorResponse body = new ApiErrorResponse(
+                OffsetDateTime.now(),
+                status.value(),
+                status.getReasonPhrase(),
+                "PERMISSION_DENIED",
+                message,
+                request.getRequestURI()
+        );
+
+        response.setStatus(status.value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        objectMapper.writeValue(response.getOutputStream(), body);
     }
 
     private void writeUnauthorized(

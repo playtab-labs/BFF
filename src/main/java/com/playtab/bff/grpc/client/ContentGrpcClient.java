@@ -54,4 +54,112 @@ public class ContentGrpcClient {
                 .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
                 .getNoticeDetail(request);
     }
+
+    public AdminCreateNoticeResponse adminCreateNotice(AdminCreateNoticeRequest request) {
+        return contentServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminCreateNotice(request);
+    }
+
+    public AdminUpdateNoticeResponse adminUpdateNotice(AdminUpdateNoticeRequest request) {
+        return contentServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminUpdateNotice(request);
+    }
+
+    public AdminDeleteNoticeResponse adminDeleteNotice(AdminDeleteNoticeRequest request) {
+        return contentServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminDeleteNotice(request);
+    }
+
+    public AdminCreateFoodTruckResponse adminCreateFoodTruck(AdminCreateFoodTruckRequest request) {
+        return contentServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminCreateFoodTruck(request);
+    }
+
+    public AdminUpdateFoodTruckResponse adminUpdateFoodTruck(AdminUpdateFoodTruckRequest request) {
+        return contentServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminUpdateFoodTruck(request);
+    }
+
+    public AdminDeleteFoodTruckResponse adminDeleteFoodTruck(AdminDeleteFoodTruckRequest request) {
+        return contentServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminDeleteFoodTruck(request);
+    }
+
+    public AdminCreatePubResponse adminCreatePub(AdminCreatePubRequest request) {
+        return contentServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminCreatePub(request);
+    }
+
+    public AdminUpdatePubResponse adminUpdatePub(AdminUpdatePubRequest request) {
+        return contentServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminUpdatePub(request);
+    }
+
+    public AdminDeletePubResponse adminDeletePub(AdminDeletePubRequest request) {
+        return contentServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminDeletePub(request);
+    }
+
+    public AdminCreateMdItemResponse adminCreateMdItem(AdminCreateMdItemRequest request) {
+        return contentServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminCreateMdItem(request);
+    }
+
+    public AdminUpdateMdItemResponse adminUpdateMdItem(AdminUpdateMdItemRequest request) {
+        return contentServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminUpdateMdItem(request);
+    }
+
+    public AdminDeleteMdItemResponse adminDeleteMdItem(AdminDeleteMdItemRequest request) {
+        return contentServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminDeleteMdItem(request);
+    }
+
+    public AdminCreateMdOptionGroupResponse adminCreateMdOptionGroup(AdminCreateMdOptionGroupRequest request) {
+        return contentServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminCreateMdOptionGroup(request);
+    }
+
+    public AdminUpdateMdOptionGroupResponse adminUpdateMdOptionGroup(AdminUpdateMdOptionGroupRequest request) {
+        return contentServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminUpdateMdOptionGroup(request);
+    }
+
+    public AdminDeleteMdOptionGroupResponse adminDeleteMdOptionGroup(AdminDeleteMdOptionGroupRequest request) {
+        return contentServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminDeleteMdOptionGroup(request);
+    }
+
+    public AdminCreateMdOptionValueResponse adminCreateMdOptionValue(AdminCreateMdOptionValueRequest request) {
+        return contentServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminCreateMdOptionValue(request);
+    }
+
+    public AdminUpdateMdOptionValueResponse adminUpdateMdOptionValue(AdminUpdateMdOptionValueRequest request) {
+        return contentServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminUpdateMdOptionValue(request);
+    }
+
+    public AdminDeleteMdOptionValueResponse adminDeleteMdOptionValue(AdminDeleteMdOptionValueRequest request) {
+        return contentServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminDeleteMdOptionValue(request);
+    }
 }
