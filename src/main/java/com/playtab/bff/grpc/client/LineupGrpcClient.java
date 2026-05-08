@@ -60,4 +60,76 @@ public class LineupGrpcClient {
                 .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
                 .getPerformersByDay(request);
     }
+
+    public AdminCreateFestivalDayResponse adminCreateFestivalDay(AdminCreateFestivalDayRequest request) {
+        return lineupServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminCreateFestivalDay(request);
+    }
+
+    public AdminUpdateFestivalDayResponse adminUpdateFestivalDay(AdminUpdateFestivalDayRequest request) {
+        return lineupServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminUpdateFestivalDay(request);
+    }
+
+    public AdminDeleteFestivalDayResponse adminDeleteFestivalDay(AdminDeleteFestivalDayRequest request) {
+        return lineupServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminDeleteFestivalDay(request);
+    }
+
+    public AdminCreateStageResponse adminCreateStage(AdminCreateStageRequest request) {
+        return lineupServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminCreateStage(request);
+    }
+
+    public AdminUpdateStageResponse adminUpdateStage(AdminUpdateStageRequest request) {
+        return lineupServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminUpdateStage(request);
+    }
+
+    public AdminDeleteStageResponse adminDeleteStage(AdminDeleteStageRequest request) {
+        return lineupServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminDeleteStage(request);
+    }
+
+    public AdminCreatePerformerResponse adminCreatePerformer(AdminCreatePerformerRequest request) {
+        return lineupServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminCreatePerformer(request);
+    }
+
+    public AdminUpdatePerformerResponse adminUpdatePerformer(AdminUpdatePerformerRequest request) {
+        return lineupServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminUpdatePerformer(request);
+    }
+
+    public AdminDeletePerformerResponse adminDeletePerformer(AdminDeletePerformerRequest request) {
+        return lineupServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminDeletePerformer(request);
+    }
+
+    public AdminCreateScheduleResponse adminCreateSchedule(AdminCreateScheduleRequest request) {
+        return lineupServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminCreateSchedule(request);
+    }
+
+    public AdminUpdateScheduleResponse adminUpdateSchedule(AdminUpdateScheduleRequest request) {
+        return lineupServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminUpdateSchedule(request);
+    }
+
+    public AdminDeleteScheduleResponse adminDeleteSchedule(AdminDeleteScheduleRequest request) {
+        return lineupServiceBlockingStub
+                .withDeadlineAfter(deadlineSeconds, TimeUnit.SECONDS)
+                .adminDeleteSchedule(request);
+    }
 }
