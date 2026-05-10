@@ -78,6 +78,7 @@ public class GrpcClientConfig {
     ) {
         ManagedChannelBuilder<?> builder = ManagedChannelBuilder
                 .forAddress(properties.getHost(), properties.getPort())
+                .maxInboundMessageSize(32 * 1024 * 1024)
                 .intercept(grpcAuthInterceptor);
 
         if (properties.isPlaintext()) {
